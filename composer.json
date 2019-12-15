@@ -1,0 +1,20 @@
+{
+    "name": "boke0/rose",
+    "description": "PSR11準拠のDIコンテナです。",
+    "type": "library",
+    "require": {
+        "psr/container": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5",
+        "mockery/mockery": "^1.3"
+    },
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "木瓜丸",
+            "email": "boke0@eugensite.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
