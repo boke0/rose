@@ -16,5 +16,15 @@
             "email": "boke0@eugensite.com"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "autoload":{
+        "psr-4":{
+            "Boke0\\Rose\\":"src/"
+        }
+    },
+    "autoload-dev":{
+        "psr-4":{
+            "Boke0\\Rose\\Test\\":"test/"
+        }
+    }
 }
