@@ -4,10 +4,10 @@ namespace Boke0\Rose;
 use \Psr\Container\ContainerInterface;
 
 class Container implements ContainerInterface{
+    private $delegates;
     public function __construct(){
         $this->resolver=[];
         $this->entries=[];
-        //$this->delegates=[];
     }
     /**
      * エントリーを追加します。
@@ -31,16 +31,12 @@ class Container implements ContainerInterface{
      * @return object 解決済みインスタンス
      */
     public function get($id){
-        if(!$this->has($id)){
-            throw new NotFoundException("エントリが登録されていません。");
+        if(isset($this->resolver[$id])){
+            return $this->resolver[$id]($this);
+        }else if($this->delegates->has($id)){
+            return $this->delegates->get($id);
         }
-        if(!isset($this->entries[$id])){
-            if(isset($this->resolver[$id])){
-                $this->entries[$id]=$this->resolver[$id]($this);
-            }
-            //後にデリゲートコンテナの探索の処理を追加
-        }
-        return $this->entries[$id];
+        throw new NotFoundException("エントリが登録されていません。");
     }
     /**
      * エントリが登録されているか確認します。
@@ -49,8 +45,16 @@ class Container implements ContainerInterface{
      * @return boolean エントリが存在するかどうか
      */
     public function has($id){
-        if(isset($this->resolver[$id])) return TRUE;
-        //後にデリゲートコンテナの探索の処理を追加
-        return FALSE;
+        if(isset($this->resolver[$id])){
+            return TRUE;
+        }
+    }
+    /**
+     * デリゲートコンテナの登録を行います。
+     *
+     * @param ContainerInterface $container コンポジットコンテナ
+     */
+    public function delegates(CompositContainer $container){
+        $this->delegates=$container;
     }
 }
