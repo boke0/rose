@@ -33,7 +33,7 @@ class Container implements ContainerInterface{
     public function get($id){
         if(isset($this->resolver[$id])){
             return $this->resolver[$id]($this);
-        }else if($this->delegates->has($id)){
+        }else if($this->delegates!=NULL&&$this->delegates->has($id)){
             return $this->delegates->get($id);
         }
         throw new NotFoundException("エントリが登録されていません。");
