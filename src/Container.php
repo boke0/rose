@@ -31,8 +31,11 @@ class Container implements ContainerInterface{
      * @return object 解決済みインスタンス
      */
     public function get($id){
-        if(isset($this->resolver[$id])){
-            return $this->resolver[$id]($this);
+        if(isset($this->entries[$id])){
+            return $this->entries[$id];
+        }else if(isset($this->resolver[$id])){
+            $this->entries[$id]=$this->resolver[$id]($this);
+            return $this->entries[$id];
         }else if($this->delegates!=NULL&&$this->delegates->has($id)){
             return $this->delegates->get($id);
         }
